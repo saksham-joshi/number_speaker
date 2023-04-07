@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication , QWidget , QLineEdit , QTextEdit , QPushButton , QRadioButton
 from PyQt5.QtGui import QIcon , QFont
 from sys import exit,argv
+from time import sleep
 from winsound import PlaySound,SND_FILENAME
 
 class speak_number :
@@ -9,20 +10,11 @@ class speak_number :
         return self.fin[1:].capitalize();
     
     def __input_checker(self,b : str) -> bool :
-        a = b
-        if a[0] == '-' :
-            a = a[1:]
-        point_count=0
-        for i in a :
-            if i == '1' or i == '2' or i == '3' or i == '4' or i == '5' or i == '6' or i == '7' or i == '8' or i == '9' or i == '0' :
-                continue
-            elif i=='.' :
-                if point_count == 1 :
-                    return True
-                point_count+=1
-            else :
-                return True
-        return False
+        try :
+            float(b)
+            return False
+        except :
+            return True
 
     def __init__(self , a : str) :
         if self.__input_checker(a) :
@@ -79,8 +71,6 @@ class speak_number :
     
     
     def __double_words(self, a : str) :
-        if int(a) == 0 :
-            return
         st = self.__single_words(int(a))
         if st.__len__() == 0 :
             if int(a)>20 and a[1] != '0' :
@@ -225,9 +215,9 @@ class main () :
         exit(this.app.exec_())
     
     def __return_pressed(this) :
-        this.__enter_button_clicked()
         this.__play_button_clicked()
-
+        this.__enter_button_clicked()
+        
     def __enter_button_clicked(this) :
         st = this.inputbox.text()
         if len(st) != 0 :
